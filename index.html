@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HelpNow 🚨 — Tez yordam platformasi</title>
+
+<!-- HELP NOW FAVICON -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23ff3b30'/%3E%3Cpath d='M50 82S15 61 15 36C15 17 39 10 50 28C61 10 85 17 85 36C85 61 50 82 50 82Z' fill='white'/%3E%3Cpath d='M50 27V55M36 41H64' stroke='%23ff3b30' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+:root{
+    --bg:#f4f7fb;
+    --card:#fff;
+    --text:#172033;
+    --muted:#697386;
+    --primary:#ff3b30;
+    --blue:#2563eb;
+    --green:#10b981;
+    --border:#e5e7eb;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    transition:.3s;
+}
+
+body.dark{
+    --bg:#0d1321;
+    --card:#182033;
+    --text:#fff;
+    --muted:#aab3c5;
+    --border:#293247;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+}
+
+.dark header{
+    background:rgba(13,19,33,.92);
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:15px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:900;
+}
+
+.logo span{
+    color:var(--primary);
+}
+
+.nav-right{
+    display:flex;
+    gap:8px;
+}
+
+.nav button{
+    border:0;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:65px 20px 45px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+    align-items:center;
+}
+
+.badge{
+    display:inline-block;
+    background:#ffe8e6;
+    color:#e52b22;
+    padding:8px 14px;
+    border-radius:50px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+.dark .badge{
+    background:#3b2023;
+}
+
+.hero h1{
+    font-size:58px;
+    line-height:1.05;
+    margin-bottom:20px;
+}
+
+.hero h1 span{
+    color:var(--primary);
+}
+
+.hero p{
+    color:var(--muted);
+    font-size:19px;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:14px 20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-blue{
+    background:var(--blue);
+    color:white;
+}
+
+.btn-light{
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+}
+
+.sos-area{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.sos{
+    width:280px;
+    height:280px;
+    border-radius:50%;
+    background:var(--primary);
+    color:white;
+    border:18px solid #ffb3af;
+    box-shadow:
+        0 0 0 25px #ffebe9,
+        0 25px 70px rgba(255,59,48,.35);
+    cursor:pointer;
+    font-size:55px;
+    font-weight:900;
+    transition:.2s;
+}
+
+.dark .sos{
+    border-color:#653034;
+    box-shadow:
+        0 0 0 25px #31191c,
+        0 25px 70px rgba(255,59,48,.25);
+}
+
+.sos:hover{
+    transform:scale(1.04);
+}
+
+.sos:active{
+    transform:scale(.96);
+}
+
+section{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h2{
+    font-size:36px;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:var(--muted);
+}
+
+.services{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:14px;
+}
+
+.service{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px 10px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.service:hover{
+    transform:translateY(-5px);
+    border-color:var(--primary);
+}
+
+.service.active{
+    border:2px solid var(--primary);
+    background:#fff3f2;
+}
+
+.dark .service.active{
+    background:#351c20;
+}
+
+.service-icon{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.service b{
+    display:block;
+}
+
+.service small{
+    color:var(--muted);
+}
+
+.location{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.map{
+    height:280px;
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    background:
+        linear-gradient(25deg,transparent 48%,#fff 49%,#fff 52%,transparent 53%),
+        linear-gradient(-25deg,transparent 48%,#fff 49%,#fff 52%,transparent 53%),
+        #dce8dc;
+    border:1px solid var(--border);
+}
+
+.dark .map{
+    background:
+        linear-gradient(25deg,transparent 48%,#283548 49%,#283548 52%,transparent 53%),
+        linear-gradient(-25deg,transparent 48%,#283548 49%,#283548 52%,transparent 53%),
+        #182b29;
+}
+
+.map-label{
+    position:absolute;
+    top:20px;
+    left:20px;
+    background:var(--card);
+    padding:10px 14px;
+    border-radius:10px;
+    box-shadow:0 5px 20px #0002;
+}
+
+.map-pin{
+    position:absolute;
+    font-size:30px;
+}
+
+.pin1{
+    left:20%;
+    top:35%;
+}
+
+.pin2{
+    left:48%;
+    top:55%;
+}
+
+.pin3{
+    left:75%;
+    top:25%;
+}
+
+.pin4{
+    left:65%;
+    top:75%;
+}
+
+.user-pin{
+    left:42%;
+    top:43%;
+    font-size:42px;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.2);
+    }
+}
+
+.results{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.result{
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:18px;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.result-icon{
+    font-size:38px;
+}
+
+.result-info{
+    flex:1;
+}
+
+.result-info p{
+    color:var(--muted);
+    font-size:14px;
+    margin-top:4px;
+}
+
+.distance{
+    color:var(--green);
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.stat{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+}
+
+.stat-icon{
+    font-size:35px;
+}
+
+.stat strong{
+    display:block;
+    font-size:30px;
+    margin:8px;
+}
+
+.stat span{
+    color:var(--muted);
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#0009;
+    z-index:500;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:var(--card);
+    color:var(--text);
+    width:450px;
+    max-width:100%;
+    padding:28px;
+    border-radius:20px;
+}
+
+.modal-box h2{
+    margin-bottom:15px;
+}
+
+.modal-box input,
+.modal-box textarea{
+    width:100%;
+    margin:7px 0;
+    padding:13px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    background:var(--bg);
+    color:var(--text);
+}
+
+.modal-buttons{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.modal-buttons button{
+    flex:1;
+}
+
+footer{
+    background:#0b0f1a;
+    color:white;
+    padding:40px 20px;
+    text-align:center;
+}
+
+footer p{
+    color:#9ca5ba;
+    margin-top:8px;
+}
+
+.toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#111827;
+    color:white;
+    padding:15px 20px;
+    border-radius:12px;
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:1000;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+@media(max-width:900px){
+
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+    }
+
+    .hero-buttons{
+        justify-content:center;
+    }
+
+    .services{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .sos{
+        width:220px;
+        height:220px;
+        font-size:42px;
+    }
+
+    .services{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .results{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .location{
+        flex-direction:column;
+        align-items:stretch;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="nav">
+
+    <div class="logo">
+        Help<span>Now</span> 🚨
+    </div>
+
+    <div class="nav-right">
+
+        <button onclick="toggleDark()">
+            🌙
+        </button>
+
+        <button onclick="openRequest()">
+            📋 Yordam so‘rash
+        </button>
+
+    </div>
+
+</div>
+
+</header>
+
+
+<main>
+
+<section class="hero">
+
+    <div>
+
+        <span class="badge">
+            ⚡ Tezkor yordam platformasi
+        </span>
+
+        <h1>
+            Yordam kerakmi?
+            <span>HelpNow</span> bilan toping.
+        </h1>
+
+        <p>
+            Kerakli yordam xizmatini tez toping,
+            joylashuvni aniqlang va yordam so‘rovingizni
+            yuboring.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="btn btn-primary"
+                onclick="sosPressed()">
+
+                🚨 SOS YORDAM
+
+            </button>
+
+            <button
+                class="btn btn-blue"
+                onclick="getLocation()">
+
+                📍 Joylashuvimni aniqlash
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="sos-area">
+
+        <button
+            class="sos"
+            onclick="sosPressed()">
+
+            SOS
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<section>
+
+<div class="title">
+
+    <h2>🆘 Qanday yordam kerak?</h2>
+
+    <p>
+        Kerakli xizmatni tanlang
+    </p>
+
+</div>
+
+
+<div class="services">
+
+    <div
+        class="service active"
+        onclick="selectService(this,'Tibbiy yordam','🚑')">
+
+        <div class="service-icon">
+            🚑
+        </div>
+
+        <b>
+            Tibbiy yordam
+        </b>
+
+        <small>
+            Tez tibbiy yordam
+        </small>
+
+    </div>
+
+
+    <div
+        class="service"
+        onclick="selectService(this,'Yong‘in xizmati','🚒')">
+
+        <div class="service-icon">
+            🚒
+        </div>
+
+        <b>
+            Yong‘in
+        </b>
+
+        <small>
+            Yong‘in xizmati
+        </small>
+
+    </div>
+
+
+    <div
+        class="service"
+        onclick="selectService(this,'Huquq-tartibot','👮')">
+
+        <div class="service-icon">
+            👮
+        </div>
+
+        <b>
+            Politsiya
+        </b>
+
+        <small>
+            Xavfsizlik
+        </small>
+
+    </div>
+
+
+    <div
+        class="service"
+        onclick="selectService(this,'Avto yordam','🚗')">
+
+        <div class="service-icon">
+            🚗
+        </div>
+
+        <b>
+            Avto yordam
+        </b>
+
+        <small>
+            Yo‘lda yordam
+        </small>
+
+    </div>
+
+
+    <div
+        class="service"
+        onclick="selectService(this,'Usta','🔧')">
+
+        <div class="service-icon">
+            🔧
+        </div>
+
+        <b>
+            Usta
+        </b>
+
+        <small>
+            Texnik yordam
+        </small>
+
+    </div>
+
+
+    <div
+        class="service"
+        onclick="selectService(this,'Dorixona','💊')">
+
+        <div class="service-icon">
+            💊
+        </div>
+
+        <b>
+            Dorixona
+        </b>
+
+        <small>
+            Dori topish
+        </small>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<div class="title">
+
+    <h2>
+        📍 Yaqin yordam
+    </h2>
+
+    <p>
+        Joylashuvingiz asosida xizmatlarni ko‘ring
+    </p>
+
+</div>
+
+
+<div class="location">
+
+    <div>
+
+        <b id="locationText">
+            📍 Joylashuv aniqlanmagan
+        </b>
+
+        <p style="color:var(--muted);margin-top:5px">
+            Joylashuvni aniqlash tugmasini bosing
+        </p>
+
+    </div>
+
+
+    <button
+        class="btn btn-blue"
+        onclick="getLocation()">
+
+        📍 Aniqlash
+
+    </button>
+
+</div>
+
+
+<div class="map">
+
+    <div class="map-label">
+        🗺️ HelpNow xaritasi
+    </div>
+
+    <div class="map-pin pin1">
+        🚑
+    </div>
+
+    <div class="map-pin pin2">
+        🚒
+    </div>
+
+    <div class="map-pin pin3">
+        💊
+    </div>
+
+    <div class="map-pin pin4">
+        🔧
+    </div>
+
+    <div class="map-pin user-pin">
+        📍
+    </div>
+
+</div>
+
+
+<div class="results">
+
+    <div class="result">
+
+        <div class="result-icon">
+            🚑
+        </div>
+
+        <div class="result-info">
+
+            <b>
+                Tez tibbiy yordam
+            </b>
+
+            <p>
+                24/7 xizmat
+            </p>
+
+        </div>
+
+        <div class="distance">
+            1.2 km
+        </div>
+
+    </div>
+
+
+    <div class="result">
+
+        <div class="result-icon">
+            💊
+        </div>
+
+        <div class="result-info">
+
+            <b>
+                24/7 Dorixona
+            </b>
+
+            <p>
+                Ochiq
+            </p>
+
+        </div>
+
+        <div class="distance">
+            1.8 km
+        </div>
+
+    </div>
+
+
+    <div class="result">
+
+        <div class="result-icon">
+            🔧
+        </div>
+
+        <div class="result-info">
+
+            <b>
+                Avto Usta
+            </b>
+
+            <p>
+                Yo‘l bo‘yida yordam
+            </p>
+
+        </div>
+
+        <div class="distance">
+            2.4 km
+        </div>
+
+    </div>
+
+
+    <div class="result">
+
+        <div class="result-icon">
+            🚒
+        </div>
+
+        <div class="result-info">
+
+            <b>
+                Yong‘in xizmati
+            </b>
+
+            <p>
+                Tezkor xizmat
+            </p>
+
+        </div>
+
+        <div class="distance">
+            3.1 km
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<section>
+
+<div class="title">
+
+    <h2>
+        📊 HelpNow statistikasi
+    </h2>
+
+</div>
+
+
+<div class="stats">
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            ⚡
+        </div>
+
+        <strong>
+            24/7
+        </strong>
+
+        <span>
+            Doimiy platforma
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            📍
+        </div>
+
+        <strong>
+            1.2 km
+        </strong>
+
+        <span>
+            O‘rtacha yaqinlik
+        </span>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-icon">
+            🤝
+        </div>
+
+        <strong>
+            98%
+        </strong>
+
+        <span>
+            Yordamga ulanish
+        </span>
+
+    </div>
+
+</div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    <h2>
+        HelpNow 🚨
+    </h2>
+
+    <p>
+        Tezroq top. To‘g‘ri yordam ol.
+    </p>
+
+    <p>
+        © 2026 HelpNow
+    </p>
+
+</footer>
+
+
+<div class="modal" id="requestModal">
+
+<div class="modal-box">
+
+    <h2>
+        📋 Yordam so‘rash
+    </h2>
+
+    <p style="color:var(--muted);margin-bottom:12px">
+
+        Tanlangan xizmat:
+
+        <b id="selectedService">
+            🚑 Tibbiy yordam
+        </b>
+
+    </p>
+
+
+    <input
+        id="requestName"
+        placeholder="Ismingiz"
+        value="Bekzod"
+    >
+
+
+    <input
+        id="requestPhone"
+        placeholder="Telefon raqamingiz"
+    >
+
+
+    <textarea
+        id="requestMessage"
+        rows="4"
+        placeholder="Muammoni qisqacha yozing..."
+    ></textarea>
+
+
+    <div class="modal-buttons">
+
+        <button
+            class="btn btn-light"
+            onclick="closeRequest()">
+
+            Bekor qilish
+
+        </button>
+
+
+        <button
+            class="btn btn-primary"
+            onclick="sendRequest()">
+
+            🚨 So‘rov yuborish
+
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+
+let selectedService="Tibbiy yordam";
+let selectedIcon="🚑";
+
+
+function toast(message){
+
+    const box=
+        document.getElementById("toast");
+
+    box.textContent=message;
+
+    box.classList.add("show");
+
+    setTimeout(function(){
+
+        box.classList.remove("show");
+
+    },3000);
+
+}
+
+
+function toggleDark(){
+
+    document.body.classList.toggle("dark");
+
+    if(
+        document.body.classList.contains("dark")
+    ){
+
+        toast("🌙 Tungi rejim yoqildi");
+
+    }else{
+
+        toast("☀️ Kunduzgi rejim yoqildi");
+
+    }
+
+}
+
+
+function selectService(
+    element,
+    name,
+    icon
+){
+
+    document
+        .querySelectorAll(".service")
+        .forEach(item=>{
+
+            item.classList.remove("active");
+
+        });
+
+
+    element.classList.add("active");
+
+
+    selectedService=name;
+    selectedIcon=icon;
+
+
+    document.getElementById(
+        "selectedService"
+    ).textContent=
+        icon+" "+name;
+
+
+    toast(
+        icon+" "+name+" tanlandi"
+    );
+
+}
+
+
+function openRequest(){
+
+    document
+        .getElementById("requestModal")
+        .classList.add("show");
+
+}
+
+
+function closeRequest(){
+
+    document
+        .getElementById("requestModal")
+        .classList.remove("show");
+
+}
+
+
+function sendRequest(){
+
+    const name=
+        document
+        .getElementById("requestName")
+        .value
+        .trim();
+
+    const phone=
+        document
+        .getElementById("requestPhone")
+        .value
+        .trim();
+
+    const message=
+        document
+        .getElementById("requestMessage")
+        .value
+        .trim();
+
+
+    if(
+        !name ||
+        !phone ||
+        !message
+    ){
+
+        toast(
+            "⚠️ Iltimos, barcha maydonlarni to‘ldiring!"
+        );
+
+        return;
+
+    }
+
+
+    closeRequest();
+
+
+    toast(
+        "🚨 So‘rov yuborildi! "+
+        selectedService+
+        " bo‘yicha yordam qidirilmoqda..."
+    );
+
+
+    setTimeout(function(){
+
+        toast(
+            "✅ Yordam xizmati so‘rovingizni qabul qildi!"
+        );
+
+    },3000);
+
+}
+
+
+function sosPressed(){
+
+    const answer=
+        confirm(
+            "🚨 SOS YORDAM\n\n"+
+            "Bekzod, yordam so‘rovini "+
+            "yuborishni xohlaysizmi?"
+        );
+
+
+    if(answer){
+
+        openRequest();
+
+        toast(
+            "🚨 SOS rejimi ishga tushdi!"
+        );
+
+    }
+
+}
+
+
+function getLocation(){
+
+    const locationText=
+        document.getElementById(
+            "locationText"
+        );
+
+
+    if(!navigator.geolocation){
+
+        locationText.textContent=
+            "📍 Brauzeringiz geolokatsiyani qo‘llamaydi";
+
+        return;
+
+    }
+
+
+    locationText.textContent=
+        "⏳ Joylashuv aniqlanmoqda...";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position){
+
+            const lat=
+                position.coords.latitude
+                .toFixed(4);
+
+            const lon=
+                position.coords.longitude
+                .toFixed(4);
+
+
+            locationText.textContent=
+                "📍 Joylashuv aniqlandi: "+
+                lat+
+                ", "+
+                lon;
+
+
+            toast(
+                "✅ Bekzod, joylashuvingiz aniqlandi!"
+            );
+
+        },
+
+
+        function(){
+
+            locationText.textContent=
+                "📍 Joylashuvga ruxsat berilmadi";
+
+
+            toast(
+                "⚠️ Brauzerda joylashuvga ruxsat bering"
+            );
+
+        }
+
+    );
+
+}
+
+
+document
+    .getElementById("requestModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target===this){
+
+                closeRequest();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>
